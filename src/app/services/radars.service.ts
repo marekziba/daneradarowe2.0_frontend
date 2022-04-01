@@ -14,7 +14,7 @@ export class RadarsService {
   subject = new Subject<Radar[]>();
 
   constructor(private http: HttpClient) { 
-    this.http.get('https://daneradarowe.pl/radars2.json')
+    this.http.get('assets/radars2.json')
       .pipe(
         map(
           (responseData: Array<any>) => {
@@ -29,5 +29,13 @@ export class RadarsService {
           this.subject.next(radars);
         }
       )
+  }
+
+  public getRadars(): Radar[] {
+    return this.radarsList.slice()
+  }
+
+  public getRadarById(id: string): Radar {
+    return this.radarsList.find(radar => radar.codeName === id);
   }
 }

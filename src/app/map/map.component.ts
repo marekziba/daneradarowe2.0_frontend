@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Feature, Map, Overlay, View } from 'ol';
 import ImageLayer from 'ol/layer/Image';
 import TileLayer from 'ol/layer/Tile';
@@ -38,6 +38,10 @@ export class MapComponent implements OnInit, OnDestroy {
   private markerLayer: VectorLayer<VectorSource>;
   private vectorSource: VectorSource;
   private iconFeature: Feature;
+
+  public radars: Radar[] = [];
+
+  @ViewChildren("radarMarker") markerRef: QueryList<ElementRef>;
 
   constructor(
     private locationService: LocationService, 
@@ -119,29 +123,31 @@ export class MapComponent implements OnInit, OnDestroy {
 
     this.radarsService.subject.subscribe(
       (radars: Radar[]) => {
-        console.log(radars);
-        radars.map(
-          (radar: Radar) => {
-            this.map.addOverlay(
-              new Overlay({
-                element: DOMElementFactory.create('div', {class: 'radar-marker'}, radar.codeName),
-                position: fromLonLat(radar.location.getLonLat()),
-                positioning: 'center-center'
-              })
-            )
-          }
-        )
+        this.radars = radars;
       }
     );
   }
 
-  // private addImage(url: string): void {
-  //   console.log("Adding image to map... "+ url);
-  //   this.imageSource.set('url', "https://daneradarowe.pl" + url);
-  //   this.imageLayer.setSource(this.imageSource);
-  //   // this.imageLayer.source
-  //   // this.map.addLayer(this.imageLayer);
-  // }
+  ngAfterViewInit(){
+    this.markerRef.changes.subscribe(
+      e => {
+        console.log(this.markerRef.toArray());
+        this.markerRef.toArray().map((marker: ElementRef) => {
+          this.map.addOverlay(
+            new Overlay({
+              element: marker.nativeElement,
+              position: fromLonLat(this.radarsService.getRadarById(marker.nativeElement.getAttribute('radarId')).location.getLonLat()),
+              positioning: 'center-center'
+            })
+          )
+        })
+      }
+    )
+  }
+
+  switchRadar(radar: Radar) {
+    console.log(radar.codeName)
+  }
 
   private addImage(image: Static): void {
     this.imageLayer.setSource(image);
