@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  daneradarowe:
+    image: daneradarowe_frontend
+    container_name: daneradarowe_frontend
+    build:
+      context: ../
+      target: development
+    volumes:
+      - ../:/home/node/app
+      - /home/node/app/node_modules
+    ports:
+      - 4200:4200
+    networks:
+      - daneradarowe 
+    
+networks:
+  daneradarowe:
+    name: daneradarowe-network
