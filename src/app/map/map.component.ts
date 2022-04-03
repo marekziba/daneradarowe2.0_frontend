@@ -5,15 +5,15 @@ import TileLayer from 'ol/layer/Tile';
 import { fromLonLat, transformExtent } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import Static from 'ol/source/ImageStatic';
-import { imageOverlay } from 'leaflet';
+import { circle, imageOverlay } from 'leaflet';
 import { LocationService } from '../services/location.service';
 import { Location } from '../models/Location.model';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Point } from 'ol/geom';
-import {Style, Icon} from 'ol/style';
+import { Circle, Point } from 'ol/geom';
+import {Style, Icon, Stroke} from 'ol/style';
 import { DataService } from '../services/data.service';
 import ImageSource from 'ol/source/Image';
 import { Image } from '../models/Image.model';
@@ -39,7 +39,15 @@ export class MapComponent implements OnInit, OnDestroy {
   private vectorSource: VectorSource;
   private iconFeature: Feature;
 
+  private rangeCircle: Circle;
+  private circleFeature: Feature;
+  private circleSource: VectorSource;
+  private circleLayer: VectorLayer<VectorSource>;
+
   public radars: Radar[] = [];
+  public selectedRadar: Radar = undefined;
+
+  public selectionModeEnabled: boolean = true;
 
   @ViewChildren("radarMarker") markerRef: QueryList<ElementRef>;
 
@@ -51,7 +59,35 @@ export class MapComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeMap();
+    this.initializeMarkerLayer();
+    this.initializeImageLayer();
     this.initializeGeolocation();
+    this.initializeSubscriptions();
+  }
+
+  ngAfterViewInit(){
+    this.markerRef.changes.subscribe(
+      e => {
+        console.log(this.markerRef.toArray());
+        this.markerRef.toArray().map((marker: ElementRef) => {
+          this.map.addOverlay(
+            new Overlay({
+              element: marker.nativeElement,
+              position: fromLonLat(this.radarsService.getRadarById(marker.nativeElement.getAttribute('radarId')).location.getLonLat()),
+              positioning: 'center-center'
+            })
+          )
+        })
+      }
+    )
+  }
+
+  private initializeSubscriptions() {
+    this.radarsService.subject.subscribe(
+      (radars: Radar[]) => {
+        this.radars = radars;
+      }
+    );
 
     this.dataSubscription = this.dataService.dataSource.pipe(
       map((images: Image[]) => {
@@ -73,22 +109,7 @@ export class MapComponent implements OnInit, OnDestroy {
     );
   }
 
-  private initializeMap(): void {
-    this.map = new Map({
-      view: new View({
-        center: fromLonLat([19.4803, 52.0693]),
-        zoom: 7,
-        constrainResolution: true
-      }),
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        })
-      ],
-      target: 'map',
-      pixelRatio: 1
-    });
-    
+  private initializeMarkerLayer(){
     this.iconFeature = new Feature();
     this.iconFeature.setStyle(new Style({
       image: new Icon({
@@ -107,7 +128,9 @@ export class MapComponent implements OnInit, OnDestroy {
     this.markerLayer = new VectorLayer({
       source: this.vectorSource
     });
+  }
 
+  private initializeImageLayer(){
     this.imageSource = new Static({
       interpolate: false,
       url: '',
@@ -120,33 +143,29 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     this.map.addLayer(this.imageLayer);
-
-    this.radarsService.subject.subscribe(
-      (radars: Radar[]) => {
-        this.radars = radars;
-      }
-    );
   }
 
-  ngAfterViewInit(){
-    this.markerRef.changes.subscribe(
-      e => {
-        console.log(this.markerRef.toArray());
-        this.markerRef.toArray().map((marker: ElementRef) => {
-          this.map.addOverlay(
-            new Overlay({
-              element: marker.nativeElement,
-              position: fromLonLat(this.radarsService.getRadarById(marker.nativeElement.getAttribute('radarId')).location.getLonLat()),
-              positioning: 'center-center'
-            })
-          )
+  private initializeMap(): void {
+    this.map = new Map({
+      view: new View({
+        center: fromLonLat([19.4803, 52.0693]),
+        zoom: 7,
+        constrainResolution: true,
+        maxZoom: 14
+      }),
+      layers: [
+        new TileLayer({
+          source: new OSM()
         })
-      }
-    )
+      ],
+      target: 'map',
+      pixelRatio: 1
+    });
   }
 
   switchRadar(radar: Radar) {
-    console.log(radar.codeName)
+    console.log(radar.codeName);
+    this.selectedRadar = radar;
   }
 
   private addImage(image: Static): void {
