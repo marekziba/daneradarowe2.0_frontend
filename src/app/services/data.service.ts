@@ -3,12 +3,21 @@ import { Injectable } from '@angular/core';
 
 import { interval, timer, Observable, Subject, Subscription } from 'rxjs';
 import { Image } from '../models/Image.model';
+import { Product } from '../models/Product.model';
+import { Radar } from '../models/Radar.model';
+import { Scan } from '../models/Scan.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   private dataSubscription: Subscription;
+
+  // state attributes
+  private selectedRadar?: Radar = undefined;
+  private selectedScan?: Scan = undefined;
+  private selectedProduct?: Product = undefined;
+
   dataSource = new Subject<Image[]>();
 
   constructor(private http: HttpClient) {
