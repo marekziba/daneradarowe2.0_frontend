@@ -8,6 +8,8 @@ import { MapComponent } from './map/map.component';
 import { HeaderComponent } from './controls/header/header.component';
 import { SliderComponent } from './controls/slider/slider.component';
 import { LocationService } from './services/location.service';
+import { ControlsService } from './services/controls.service';
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import { LocationService } from './services/location.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [LocationService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 import { ElementRef } from "@angular/core";
+import { BoundingBox } from "./BoundingBox.model";
 import { Location } from "./Location.model";
 
 export class Radar {
@@ -6,12 +7,12 @@ export class Radar {
         private _fullName: string,
         private _codeName: string,
         private _location: Location,
-        private _boundingBox: Location[],
+        private _boundingBox: BoundingBox,
         private _markerRef?: ElementRef
     ) {}
 
     public get fullName(): string {
-        return this.fullName;
+        return this._fullName;
     }
 
     public get codeName(): string {
@@ -22,18 +23,11 @@ export class Radar {
         return this._location;
     }
 
-    public get boundingBox(): Location[] {
+    public get boundingBox(): BoundingBox {
         return this._boundingBox;
     }
 
     public get markerRef(): ElementRef {
         return this._markerRef;
-    }
-
-    public flatBoundingBox(): number[] {
-        return [
-            ...this._boundingBox[0].getLonLat(),
-            ...this._boundingBox[1].getLonLat()
-        ]
     }
 }

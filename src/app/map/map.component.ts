@@ -2,30 +2,23 @@ import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } fro
 import { Feature, Map, Overlay, View } from 'ol';
 import ImageLayer from 'ol/layer/Image';
 import TileLayer from 'ol/layer/Tile';
-import { fromLonLat, transform, transformExtent } from 'ol/proj';
+import { fromLonLat, transformExtent } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import Static from 'ol/source/ImageStatic';
-import { circle, imageOverlay } from 'leaflet';
 import { LocationService } from '../services/location.service';
 import { Location } from '../models/Location.model';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
-<<<<<<< HEAD
-import { Point, Polygon } from 'ol/geom';
+import { Point } from 'ol/geom';
 import {Style, Icon, Stroke, Fill} from 'ol/style';
-=======
-import { Circle, Point } from 'ol/geom';
-import {Style, Icon, Stroke} from 'ol/style';
->>>>>>> de943851fd208df565151e372895deee39533a09
 import { DataService } from '../services/data.service';
-import ImageSource from 'ol/source/Image';
 import { Image } from '../models/Image.model';
 import { RadarsService } from '../services/radars.service';
 import { Radar } from '../models/Radar.model';
-import { DOMElementFactory } from '../utils/DOMElementFactory';
-import { circular } from 'ol/geom/Polygon';
+import { MaskPolygon } from '../utils/MaskPolygon';
+import { ControlsService } from '../services/controls.service';
 // import ImageCanvasSource from 'ol/source/ImageCanvas';
 // import * as L from 'leaflet';
 
@@ -37,6 +30,9 @@ import { circular } from 'ol/geom/Polygon';
 export class MapComponent implements OnInit, OnDestroy {
   private locationSubsciption = new Subscription();
   private dataSubscription = new Subscription();
+  private selectionModeSubscription = new Subscription();
+
+  private dataSource: Observable<any>;
 
   private map: Map;
   private imageSource: Static;
@@ -45,29 +41,20 @@ export class MapComponent implements OnInit, OnDestroy {
   private vectorSource: VectorSource;
   private iconFeature: Feature;
 
-<<<<<<< HEAD
-  private polygon: Polygon;
-  private polygonFeature: Feature;
-  private polygonSource: VectorSource;
-  private polygonLayer: VectorLayer<VectorSource>;
-=======
-  private rangeCircle: Circle;
-  private circleFeature: Feature;
-  private circleSource: VectorSource;
-  private circleLayer: VectorLayer<VectorSource>;
->>>>>>> de943851fd208df565151e372895deee39533a09
+  private maskLayer = new VectorLayer<VectorSource>();
 
   public radars: Radar[] = [];
   public selectedRadar: Radar = undefined;
 
-  public selectionModeEnabled: boolean = true;
+  public selectionModeEnabled: boolean = false;
 
   @ViewChildren("radarMarker") markerRef: QueryList<ElementRef>;
 
   constructor(
     private locationService: LocationService, 
     private dataService: DataService,
-    private radarsService: RadarsService
+    private radarsService: RadarsService,
+    private controlsService: ControlsService
     ) { }
 
   ngOnInit(): void {
@@ -102,46 +89,39 @@ export class MapComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.dataSubscription = this.dataService.dataSource.pipe(
+    this.reloadData();
+
+    this.selectionModeSubscription = this.controlsService.selectionModeChanged.subscribe(
+      (mode: boolean) => {
+        this.selectionModeEnabled = mode;
+      }
+    );
+  }
+
+  private reloadData(){
+    const timeout = timer(1000).subscribe(() => console.log('Seems like loading data takes a really long time...'));
+    this.dataSubscription = this.dataService.requestData().pipe(
       map((images: Image[]) => {
         return images.map(
           (image: Image) => new Static({
             interpolate: false,
             url: "https://daneradarowe.pl" + image.url,
-            imageExtent: transformExtent([19.076708813633406, 51.26792366474811, 22.83757981873387, 53.523962192314826], 'EPSG:4326', 'EPSG:3857')
+            imageExtent: transformExtent(this.selectedRadar ? this.selectedRadar.boundingBox.flat('lonlat') : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
           })
         )
       })
     ).subscribe(
-      (images: Static[]) => {
-        console.log("new image scan arrived")
-        if(images[0].getUrl() !== this.imageLayer.getSource().getUrl()){
-          this.addImage(images[0]);
+        (images: Static[]) => {
+          // console.log(this.selectedRadar.boundingBox.flat())
+          timeout.unsubscribe();
+          if(images[0].getUrl() !== this.imageLayer.getSource().getUrl() && this.selectedRadar){
+            this.addImage(images[0]);
+          }
         }
-      }
-    );
+      );
   }
 
-<<<<<<< HEAD
-  private initializeMap(): void {
-    this.map = new Map({
-      view: new View({
-        center: fromLonLat([19.4803, 52.0693]),
-        zoom: 7,
-        constrainResolution: true
-      }),
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        })
-      ],
-      target: 'map',
-      pixelRatio: 4
-    });
-    
-=======
   private initializeMarkerLayer(){
->>>>>>> de943851fd208df565151e372895deee39533a09
     this.iconFeature = new Feature();
     this.iconFeature.setStyle(new Style({
       image: new Icon({
@@ -160,13 +140,24 @@ export class MapComponent implements OnInit, OnDestroy {
     this.markerLayer = new VectorLayer({
       source: this.vectorSource
     });
+
+    this.maskLayer.setStyle(new Style({
+      stroke: new Stroke({
+        color: 'rgba(0, 0, 0, 0)'
+      }),
+      fill: new Fill({
+        color: 'rgba(0, 0, 0, 0.4)'
+      })
+    }));
+
+    this.map.addLayer(this.maskLayer);
   }
 
   private initializeImageLayer(){
     this.imageSource = new Static({
       interpolate: false,
       url: '',
-      imageExtent: transformExtent([11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
+      imageExtent: transformExtent(this.selectedRadar ? this.selectedRadar.boundingBox.flat() : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
     });
 
     this.imageLayer = new ImageLayer({
@@ -175,55 +166,6 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     this.map.addLayer(this.imageLayer);
-<<<<<<< HEAD
-
-    this.radarsService.subject.subscribe(
-      (radars: Radar[]) => {
-        this.radars = radars;
-      }
-    );
-
-    this.polygon = new Polygon([[
-      [-180.0, 90.0],
-      [180.0, 90.0],
-      [180.0, -90.0],
-      [-180.0, -90.0]
-    ]]);
-
-    const circlePolygon = circular([20.960911, 52.405219], 125250, 720);
-
-    console.log(circlePolygon.getLinearRing(0).transform('EPSG:4326', 'EPSG:3857'));
-
-    this.polygon.appendLinearRing(circlePolygon.getLinearRing(0));
-
-    this.polygon.transform('EPSG:4326', 'EPSG:3857').translate(0, 500);
-
-    // this.polygon = circlePolygon;
-
-    this.polygonFeature = new Feature(this.polygon);
-
-    this.polygonSource = new VectorSource({
-      features: [this.polygonFeature]
-    });
-
-    const polygonStyle = new Style({
-      stroke: new Stroke({
-        color: 'rgba(0, 0, 0, 0.4)',
-        width: 0
-      }),
-      fill: new Fill({
-        color: 'rgba(0, 0, 0, 0.4)'
-      })
-    })
-
-    this.polygonLayer = new VectorLayer({
-      source: this.polygonSource,
-      style: polygonStyle
-    });
-
-    this.map.addLayer(this.polygonLayer);
-=======
->>>>>>> de943851fd208df565151e372895deee39533a09
   }
 
   private initializeMap(): void {
@@ -245,8 +187,20 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   switchRadar(radar: Radar) {
-    console.log(radar.codeName);
+    // console.log(radar.codeName);
     this.selectedRadar = radar;
+    this.dataService.radar = radar;
+    this.imageLayer.setSource(
+      new Static({url: '', imageExtent: [0.0, 0.0, 0.0, 0.0]})
+    );
+    this.reloadData();
+    this.addMask();
+  }
+
+  addMask() {
+    const mask = new MaskPolygon(this.selectedRadar.location.getLonLat(), 125500);
+    const maskSource = mask.getSource();
+    this.maskLayer.setSource(maskSource);
   }
 
   private addImage(image: Static): void {
@@ -267,5 +221,6 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.locationSubsciption.unsubscribe();
     this.dataSubscription.unsubscribe();
+    this.selectionModeSubscription.unsubscribe();
   }
 }

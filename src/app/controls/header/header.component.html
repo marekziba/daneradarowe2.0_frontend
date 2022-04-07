@@ -1,20 +1,11 @@
-<!-- <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-      <img src="/assets/logo.png" width="45" height="45" class="d-inline-block align-top" alt="">
-      <h3 style="display: inline;">daneradarowe.pl</h3>
-      <button type="button" class="btn btn-outline-danger">
-        Wesprzyj daneradarowe.pl na Patronite!
-    </button>
-    </a>
-  </nav> -->
 <div class="row">
     <div class="col-12 header-content">
         <div class="scan-info-wrapper">
-            <h4>POLCOMP</h4>
+            <h4>{{this.selectedRadar ? this.selectedRadar.fullName : 'POLCOMP'}}</h4>
             <h5>CMAX(dBZ)</h5>
             <h5>19:30 11.08.2017</h5>
         </div>
-        <button type="button" class="btn btn-outline-primary shadow-none">Zmień radar</button>
+        <button type="button" class="btn btn-outline-primary shadow-none" (click)="selectionModeToggle()">Zmień radar</button>
     </div>
 </div>
 <div class="row color-scale flex-nowrap">

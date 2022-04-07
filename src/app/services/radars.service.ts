@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BoundingBox } from '../models/BoundingBox.model';
 import { Location } from '../models/Location.model';
 import { Radar } from '../models/Radar.model';
 
@@ -19,7 +20,7 @@ export class RadarsService {
         map(
           (responseData: Array<any>) => {
             return responseData.map(
-              (radar) =>  new Radar(radar.name, radar.id, new Location(radar.location[0], radar.location[1]), radar.boundingBox['125'])
+              (radar) =>  new Radar(radar.name, radar.id, new Location(radar.location[0], radar.location[1]), BoundingBox.fromArray(radar.boundingBox['125']))
             )
           }
         )
