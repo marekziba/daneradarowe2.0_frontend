@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } fro
 import { Feature, Map, Overlay, View } from 'ol';
 import ImageLayer from 'ol/layer/Image';
 import TileLayer from 'ol/layer/Tile';
-import { fromLonLat, transformExtent } from 'ol/proj';
+import { fromLonLat, transform, transformExtent } from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import Static from 'ol/source/ImageStatic';
 import { imageOverlay } from 'leaflet';
@@ -12,14 +12,15 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Point } from 'ol/geom';
-import {Style, Icon} from 'ol/style';
+import { Point, Polygon } from 'ol/geom';
+import {Style, Icon, Stroke, Fill} from 'ol/style';
 import { DataService } from '../services/data.service';
 import ImageSource from 'ol/source/Image';
 import { Image } from '../models/Image.model';
 import { RadarsService } from '../services/radars.service';
 import { Radar } from '../models/Radar.model';
 import { DOMElementFactory } from '../utils/DOMElementFactory';
+import { circular } from 'ol/geom/Polygon';
 // import ImageCanvasSource from 'ol/source/ImageCanvas';
 // import * as L from 'leaflet';
 
@@ -38,6 +39,11 @@ export class MapComponent implements OnInit, OnDestroy {
   private markerLayer: VectorLayer<VectorSource>;
   private vectorSource: VectorSource;
   private iconFeature: Feature;
+
+  private polygon: Polygon;
+  private polygonFeature: Feature;
+  private polygonSource: VectorSource;
+  private polygonLayer: VectorLayer<VectorSource>;
 
   public radars: Radar[] = [];
 
@@ -86,7 +92,7 @@ export class MapComponent implements OnInit, OnDestroy {
         })
       ],
       target: 'map',
-      pixelRatio: 1
+      pixelRatio: 4
     });
     
     this.iconFeature = new Feature();
@@ -126,6 +132,46 @@ export class MapComponent implements OnInit, OnDestroy {
         this.radars = radars;
       }
     );
+
+    this.polygon = new Polygon([[
+      [-180.0, 90.0],
+      [180.0, 90.0],
+      [180.0, -90.0],
+      [-180.0, -90.0]
+    ]]);
+
+    const circlePolygon = circular([20.960911, 52.405219], 125250, 720);
+
+    console.log(circlePolygon.getLinearRing(0).transform('EPSG:4326', 'EPSG:3857'));
+
+    this.polygon.appendLinearRing(circlePolygon.getLinearRing(0));
+
+    this.polygon.transform('EPSG:4326', 'EPSG:3857').translate(0, 500);
+
+    // this.polygon = circlePolygon;
+
+    this.polygonFeature = new Feature(this.polygon);
+
+    this.polygonSource = new VectorSource({
+      features: [this.polygonFeature]
+    });
+
+    const polygonStyle = new Style({
+      stroke: new Stroke({
+        color: 'rgba(0, 0, 0, 0.4)',
+        width: 0
+      }),
+      fill: new Fill({
+        color: 'rgba(0, 0, 0, 0.4)'
+      })
+    })
+
+    this.polygonLayer = new VectorLayer({
+      source: this.polygonSource,
+      style: polygonStyle
+    });
+
+    this.map.addLayer(this.polygonLayer);
   }
 
   ngAfterViewInit(){
