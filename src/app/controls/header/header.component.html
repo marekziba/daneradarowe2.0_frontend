@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-12 header-content">
         <div class="scan-info-wrapper">
-            <h4>{{this.selectedRadar ? this.selectedRadar.fullName : 'POLCOMP'}}</h4>
-            <h5>CMAX(dBZ)</h5>
-            <h5>19:30 11.08.2017</h5>
+            <h4 class="radar-name">{{this.selectedRadar ? this.selectedRadar.fullName : 'daneradarowe.pl'}}</h4>
+            <h5 *ngIf="currentImage; else datePlaceholder" class="date">{{'PPI(V) 0.5°  ' + (currentImage.date | date :'HH:mm dd.MM.YYYY')}}</h5>
+            <ng-template #datePlaceholder><h5 class="date">Wybierz radar i product...</h5></ng-template>
         </div>
-        <button type="button" class="btn btn-outline-primary shadow-none" (click)="selectionModeToggle()">Zmień radar</button>
+        <button type="button" class="btn btn-outline-primary shadow-none radar-switch-button" (click)="selectionModeToggle()">Zmień radar</button>
     </div>
 </div>
-<div class="row color-scale flex-nowrap">
-  <div class='col scale-element' style='background-color: #0000c7;'></div>
+<div class="row color-scale flex-nowrap" (mousemove)="moveTooltip($event)">
+  <!-- <div class='col scale-element' style='background-color: #0000c7;'></div>
   <div class='col scale-element' style='background-color: #0034fe;'></div>
   <div class='col scale-element' style='background-color: #0079fe;'></div>
   <div class='col scale-element' style='background-color: #1aa2fe;'></div>
@@ -26,5 +26,7 @@
   <div class='col scale-element' style='background-color: #800000;'></div>
   <div class='col scale-element' style='background-color: #be0078;'></div>
   <div class='col scale-element' style='background-color: #e600aa;'></div>
-  <div class='col scale-element' style='background-color: #ff28dc;'></div>
+  <div class='col scale-element' style='background-color: #ff28dc;'></div> -->
+  <div *ngFor="let color of colorScale;" class="col scale-element" [ngStyle]="{backgroundColor: color}"></div>
+  <span class="tooltiptext" #scaleTooltip>Tooltip text</span>
 </div>

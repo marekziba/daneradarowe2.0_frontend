@@ -31,6 +31,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private locationSubsciption = new Subscription();
   private dataSubscription = new Subscription();
   private selectionModeSubscription = new Subscription();
+  private imageSubscripton = new Subscription();
 
   private dataSource: Observable<any>;
 
@@ -45,6 +46,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   public radars: Radar[] = [];
   public selectedRadar: Radar = undefined;
+  public currentImage: Image = undefined;
 
   public selectionModeEnabled: boolean = false;
 
@@ -96,6 +98,12 @@ export class MapComponent implements OnInit, OnDestroy {
         this.selectionModeEnabled = mode;
       }
     );
+
+    this.imageSubscripton = this.dataService.imageChanged.subscribe(
+      (image: Image) => {
+        this.currentImage = image;
+      }
+    );
   }
 
   private reloadData(){
@@ -103,19 +111,25 @@ export class MapComponent implements OnInit, OnDestroy {
     this.dataSubscription = this.dataService.requestData().pipe(
       map((images: Image[]) => {
         return images.map(
-          (image: Image) => new Static({
-            interpolate: false,
-            url: "https://daneradarowe.pl" + image.url,
-            imageExtent: transformExtent(this.selectedRadar ? this.selectedRadar.boundingBox.flat('lonlat') : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
-          })
+          (image: Image) => {
+            return {
+              map: new Static({
+                interpolate: false,
+                url: "https://daneradarowe.pl" + image.url,
+                imageExtent: transformExtent(this.selectedRadar ? this.selectedRadar.boundingBox.flat('lonlat') : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
+              }),
+              image: image
+            }
+          }
         )
       })
     ).subscribe(
-        (images: Static[]) => {
+        (images: {}) => {
           // console.log(this.selectedRadar.boundingBox.flat())
           timeout.unsubscribe();
-          if(images[0].getUrl() !== this.imageLayer.getSource().getUrl() && this.selectedRadar){
-            this.addImage(images[0]);
+          if(images[0].map.getUrl() !== this.imageLayer.getSource().getUrl() && this.selectedRadar){
+            this.addImage(images[0].map);
+            this.dataService.currentImage = images[0].image;
           }
         }
       );
@@ -199,6 +213,9 @@ export class MapComponent implements OnInit, OnDestroy {
 
   addMask() {
     const mask = new MaskPolygon(this.selectedRadar.location.getLonLat(), 125500);
+    mask.translate(0, 500);
+    // const mask = new MaskPolygon(this.selectedRadar.location.getLonLat(), 251000);
+    // mask.translate(0, 1000);
     const maskSource = mask.getSource();
     this.maskLayer.setSource(maskSource);
   }
