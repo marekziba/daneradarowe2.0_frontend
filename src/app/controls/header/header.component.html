@@ -2,31 +2,145 @@
     <div class="col-12 header-content">
         <div class="scan-info-wrapper">
             <h4 class="radar-name">{{this.selectedRadar ? this.selectedRadar.fullName : 'daneradarowe.pl'}}</h4>
-            <h5 *ngIf="currentImage; else datePlaceholder" class="date">{{'PPI(V) 0.5°  ' + (currentImage.date | date :'HH:mm dd.MM.YYYY')}}</h5>
-            <ng-template #datePlaceholder><h5 class="date">Wybierz radar i product...</h5></ng-template>
+            <div class="dropdown">
+                <h5 *ngIf="currentImage; else datePlaceholder" class="dropdown-toggle date" data-bs-toggle="dropdown">PPI(dBZ) 0.5°</h5>
+                <ng-template #datePlaceholder><h5 class="dropdown-toggle date" data-bs-toggle="dropdown">Wybierz radar i product...</h5></ng-template>
+              
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <h5 class="dropdown-header">PPI</h5>
+                    <hr class="dropdown-divider">
+                    <a class="dropdown-item product-item" href="#">
+                        <div class="product-item-wrapper">
+                            <div class="product-item-info">
+                                <h5 class="product-item-header">PPI(dBZ)</h5>
+                                <p class="product-item-description">Skan dopplerowski (125km)</p>
+                            </div>
+                            <div class="product-item-selector">
+                                <div class="dropdown" (click)="disablePropagation($event)">
+                                    <div class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">0.5°</div>
+                                    <div class="dropdown-menu">
+                                        <p class="dropdown-item">0.5°</p>
+                                        <p class="dropdown-item">0.8°</p>
+                                        <p class="dropdown-item">1.4°</p>
+                                        <p class="dropdown-item">2.2°</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="dropdown-item product-item" href="#">
+                        <div class="product-item-wrapper">
+                            <div class="product-item-info">
+                                <h5 class="product-item-header">PPI(dBZ)</h5>
+                                <p class="product-item-description">Skan klasyczny (250km)</p>
+                            </div>
+                            <div class="product-item-selector">
+                                <div class="dropdown" (click)="disablePropagation($event)">
+                                    <div class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">0.5°</div>
+                                    <div class="dropdown-menu">
+                                        <p class="dropdown-item">0.5°</p>
+                                        <p class="dropdown-item">0.8°</p>
+                                        <p class="dropdown-item">1.4°</p>
+                                        <p class="dropdown-item">2.2°</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="dropdown-item product-item" href="#">
+                        <div class="product-item-wrapper">
+                            <div class="product-item-info">
+                                <h5 class="product-item-header">PPI(V)</h5>
+                                <p class="product-item-description">Skan dopplerowski (125km)</p>
+                            </div>
+                            <div class="product-item-selector">
+                                <div class="dropdown" (click)="disablePropagation($event)">
+                                    <div class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">0.5°</div>
+                                    <div class="dropdown-menu">
+                                        <p class="dropdown-item">0.5°</p>
+                                        <p class="dropdown-item">0.8°</p>
+                                        <p class="dropdown-item">1.4°</p>
+                                        <p class="dropdown-item">2.2°</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <h5 class="dropdown-header">CAPPI</h5>
+                    <hr class="dropdown-divider">
+                    <a class="dropdown-item product-item" href="#">
+                        <div class="product-item-wrapper">
+                            <div class="product-item-info">
+                                <h5 class="product-item-header">CAPPI(dBZ)</h5>
+                                <p class="product-item-description">Skan dopplerowski (125km)</p>
+                            </div>
+                            <div class="product-item-selector">
+                                <div class="dropdown" (click)="disablePropagation($event)">
+                                    <div class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">1000m</div>
+                                    <div class="dropdown-menu">
+                                        <p *ngFor="let height of [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]" class="dropdown-item">{{height + 'm'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="dropdown-item product-item" href="#">
+                        <div class="product-item-wrapper">
+                            <div class="product-item-info">
+                                <h5 class="product-item-header">CAPPI(dBZ)</h5>
+                                <p class="product-item-description">Skan klasyczny (250km)</p>
+                            </div>
+                            <div class="product-item-selector">
+                                <div class="dropdown" (click)="disablePropagation($event)">
+                                    <div class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">1000m</div>
+                                    <div class="dropdown-menu">
+                                        <p *ngFor="let height of [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]" class="dropdown-item">{{height + 'm'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="dropdown-item product-item" href="#">
+                        <div class="product-item-wrapper">
+                            <div class="product-item-info">
+                                <h5 class="product-item-header">CAPPI(V)</h5>
+                                <p class="product-item-description">Skan dopplerowski (125km)</p>
+                            </div>
+                            <div class="product-item-selector">
+                                <div class="dropdown" (click)="disablePropagation($event)">
+                                    <div class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">1000m</div>
+                                    <div class="dropdown-menu">
+                                        <p *ngFor="let height of [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]" class="dropdown-item">{{height + 'm'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <h5 class="dropdown-header">CMAX</h5>
+                    <hr class="dropdown-divider">
+                    <a class="dropdown-item product-item" href="#">
+                        <div class="product-item-wrapper">
+                            <div class="product-item-info">
+                                <h5 class="product-item-header">CMAX(dBZ)</h5>
+                                <p class="product-item-description">Skan dopplerowski (125km)</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="dropdown-item product-item" href="#">
+                        <div class="product-item-wrapper">
+                            <div class="product-item-info">
+                                <h5 class="product-item-header">CMAX(dBZ)</h5>
+                                <p class="product-item-description">Skan klasyczny (250km)</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+              </div>
         </div>
         <button type="button" class="btn btn-outline-primary shadow-none radar-switch-button" (click)="selectionModeToggle()">Zmień radar</button>
     </div>
 </div>
 <div class="row color-scale flex-nowrap" (mousemove)="moveTooltip($event)">
-  <!-- <div class='col scale-element' style='background-color: #0000c7;'></div>
-  <div class='col scale-element' style='background-color: #0034fe;'></div>
-  <div class='col scale-element' style='background-color: #0079fe;'></div>
-  <div class='col scale-element' style='background-color: #1aa2fe;'></div>
-  <div class='col scale-element' style='background-color: #53d0fe;'></div>
-  <div class='col scale-element' style='background-color: #86f0fe;'></div>
-  <div class='col scale-element' style='background-color: #fefefe;'></div>
-  <div class='col scale-element' style='background-color: #fef7c0;'></div>
-  <div class='col scale-element' style='background-color: #fee500;'></div>
-  <div class='col scale-element' style='background-color: #febc00;'></div>
-  <div class='col scale-element' style='background-color: #fe7300;'></div>
-  <div class='col scale-element' style='background-color: #fe3f00;'></div>
-  <div class='col scale-element' style='background-color: #c70000;'></div>
-  <div class='col scale-element' style='background-color: #a00000;'></div>
-  <div class='col scale-element' style='background-color: #800000;'></div>
-  <div class='col scale-element' style='background-color: #be0078;'></div>
-  <div class='col scale-element' style='background-color: #e600aa;'></div>
-  <div class='col scale-element' style='background-color: #ff28dc;'></div> -->
   <div *ngFor="let color of colorScale;" class="col scale-element" [ngStyle]="{backgroundColor: color}"></div>
   <span class="tooltiptext" #scaleTooltip>Tooltip text</span>
 </div>

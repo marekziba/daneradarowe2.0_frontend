@@ -43,6 +43,27 @@
 
 .date {
     display: inline-block;
+    cursor: pointer;
+}
+
+.dropdown-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.dropdown-header, .product-item {
+    min-width: 400px;
+}
+
+.dark {
+    background-color: #1a1a1a;
+    color: #e3e3e3;
+}
+
+.product-item-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .radar-switch-button {

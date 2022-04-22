@@ -29,6 +29,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.onResize();
   }
 
+  disablePropagation(e) {
+    e.stopPropagation();
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
      this.screenWidth = window.innerWidth;

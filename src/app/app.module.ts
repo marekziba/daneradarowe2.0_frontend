@@ -16,7 +16,7 @@ import { DataService } from './services/data.service';
     AppComponent,
     MapComponent,
     HeaderComponent,
-    SliderComponent
+    SliderComponent,
   ],
   imports: [
     BrowserModule,

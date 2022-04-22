@@ -9,7 +9,7 @@ import { LocationService } from '../services/location.service';
 import { Location } from '../models/Location.model';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
-import { Observable, Subscription, timer } from 'rxjs';
+import { interval, Observable, Subscription, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Point } from 'ol/geom';
 import {Style, Icon, Stroke, Fill} from 'ol/style';
@@ -19,6 +19,7 @@ import { RadarsService } from '../services/radars.service';
 import { Radar } from '../models/Radar.model';
 import { MaskPolygon } from '../utils/MaskPolygon';
 import { ControlsService } from '../services/controls.service';
+import XYZ from 'ol/source/XYZ';
 // import ImageCanvasSource from 'ol/source/ImageCanvas';
 // import * as L from 'leaflet';
 
@@ -32,6 +33,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private dataSubscription = new Subscription();
   private selectionModeSubscription = new Subscription();
   private imageSubscripton = new Subscription();
+  // private dataRefreshSubscription = new Subscription();
 
   private dataSource: Observable<any>;
 
@@ -65,6 +67,12 @@ export class MapComponent implements OnInit, OnDestroy {
     this.initializeImageLayer();
     this.initializeGeolocation();
     this.initializeSubscriptions();
+
+    this.imageSubscripton = interval(30000).subscribe(
+      () => {
+        this.reloadData();
+      }
+    );
   }
 
   ngAfterViewInit(){
@@ -192,7 +200,9 @@ export class MapComponent implements OnInit, OnDestroy {
       }),
       layers: [
         new TileLayer({
-          source: new OSM()
+          source: new XYZ({
+            url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png'
+          })
         })
       ],
       target: 'map',

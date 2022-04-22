@@ -7,6 +7,7 @@ COPY package-lock.json .
 
 RUN npm install -g @angular/cli
 RUN npm install
+RUN npm install @ng-bootstrap/ng-bootstrap --force
 
 EXPOSE 4200 49153
 
