@@ -1,0 +1,23 @@
+.product-name {
+    display: inline-block;
+}
+
+.date {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.dropdown-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.dropdown-header, .product-item {
+    min-width: 400px;
+}
+
+.product-item-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

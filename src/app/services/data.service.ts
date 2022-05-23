@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { plainToClass } from 'class-transformer';
 
-import { interval, timer, Observable, Subject, Subscription, map } from 'rxjs';
+import { interval, timer, Observable, Subject, Subscription, map, tap } from 'rxjs';
 import { Image } from '../models/Image.model';
 import { Product } from '../models/Product.model';
+import { ProductType } from '../models/ProductType.model';
 import { Radar } from '../models/Radar.model';
 import { Scan } from '../models/Scan.model';
 
@@ -55,9 +57,33 @@ export class DataService {
     const radarId = this.selectedRadar ? this.selectedRadar.codeName : 'LEG';
     // const scanR = this.selectedScan.range;
 
-    return this.http.post('https://daneradarowe.pl/api/getData', {
-      rstd: `${radarId}_125_dBZ_1_enh`,
-      n: 12
-    });
+    // return this.http.post('https://daneradarowe.pl/api/getData', {
+    //   rstd: `${radarId}_125_dBZ_1_enh`,
+    //   n: 12
+    // });
+
+    return this.http.get('https://localhost:56382/api/Images')
+    .pipe(
+      tap(
+        (response) => console.log(response)
+      ),
+      map(
+        (images: any) => images.map(
+          (image: any) => plainToClass(Image, image, {excludeExtraneousValues: true})
+        )
+      )
+    );
+  }
+
+  getProducts(): Observable<ProductType[]> {
+    return this.http.get('https://localhost:56382/api/Products').pipe(
+      map(
+        (productTypes: any) => productTypes.map(
+          (productType) => plainToClass(ProductType, productType, {excludeExtraneousValues: true})
+        ).filter(
+          (productType: ProductType) => productType.products.length > 0
+        )
+      )
+    )
   }
 }

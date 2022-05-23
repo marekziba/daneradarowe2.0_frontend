@@ -1,0 +1,898 @@
+[
+    {
+      "id": "3bf69ed0-38c2-431b-847b-89f0afe48aa1",
+      "fullName": "Brzuchania",
+      "codeName": "BRZ",
+      "lat": 0,
+      "lon": 0,
+      "isDoppler": true,
+      "isDP": true,
+      "volumes": null,
+      "images": null,
+      "compositeImages": null,
+      "scans": [
+        {
+          "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "name": "doppler",
+          "range": 125,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "name": "classic",
+          "range": 250,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        }
+      ],
+      "products": [
+        {
+          "id": "0c15069e-9e1c-44d2-a191-662d8fa4f46a",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "dataType": null,
+          "scan": {
+            "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+            "name": "classic",
+            "range": 250,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "42710536-c154-4baf-990a-265673efa950",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "e8cf0208-db5c-4145-be0b-e6d2e616fb55",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "7091da6d-4400-427e-a1eb-78a8241bc4fd",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        }
+      ]
+    },
+    {
+      "id": "69b64cd2-b72c-4965-9c1a-1aa7d9e29337",
+      "fullName": "Legionowo",
+      "codeName": "LEG",
+      "lat": 0,
+      "lon": 0,
+      "isDoppler": true,
+      "isDP": false,
+      "volumes": null,
+      "images": null,
+      "compositeImages": null,
+      "scans": [
+        {
+          "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "name": "doppler",
+          "range": 125,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "name": "classic",
+          "range": 250,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        }
+      ],
+      "products": [
+        {
+          "id": "0c15069e-9e1c-44d2-a191-662d8fa4f46a",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "dataType": null,
+          "scan": {
+            "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+            "name": "classic",
+            "range": 250,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "42710536-c154-4baf-990a-265673efa950",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "e8cf0208-db5c-4145-be0b-e6d2e616fb55",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "7091da6d-4400-427e-a1eb-78a8241bc4fd",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        }
+      ]
+    },
+    {
+      "id": "954094b5-8eb7-4188-b962-97763c0effc7",
+      "fullName": "Świdwin",
+      "codeName": "SWI",
+      "lat": 0,
+      "lon": 0,
+      "isDoppler": true,
+      "isDP": false,
+      "volumes": null,
+      "images": null,
+      "compositeImages": null,
+      "scans": [
+        {
+          "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "name": "doppler",
+          "range": 125,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "name": "classic",
+          "range": 250,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        }
+      ],
+      "products": [
+        {
+          "id": "0c15069e-9e1c-44d2-a191-662d8fa4f46a",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "dataType": null,
+          "scan": {
+            "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+            "name": "classic",
+            "range": 250,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "42710536-c154-4baf-990a-265673efa950",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "e8cf0208-db5c-4145-be0b-e6d2e616fb55",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "7091da6d-4400-427e-a1eb-78a8241bc4fd",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        }
+      ]
+    },
+    {
+      "id": "9e1c0667-3fde-4bf7-b7de-744a881e5ec4",
+      "fullName": "Pastewnik",
+      "codeName": "PAS",
+      "lat": 0,
+      "lon": 0,
+      "isDoppler": true,
+      "isDP": true,
+      "volumes": null,
+      "images": null,
+      "compositeImages": null,
+      "scans": [
+        {
+          "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "name": "doppler",
+          "range": 125,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "name": "classic",
+          "range": 250,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        }
+      ],
+      "products": [
+        {
+          "id": "0c15069e-9e1c-44d2-a191-662d8fa4f46a",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "dataType": null,
+          "scan": {
+            "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+            "name": "classic",
+            "range": 250,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "42710536-c154-4baf-990a-265673efa950",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "e8cf0208-db5c-4145-be0b-e6d2e616fb55",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "7091da6d-4400-427e-a1eb-78a8241bc4fd",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        }
+      ]
+    },
+    {
+      "id": "a4ab53a0-dc4c-4c2a-a64a-2e09ae98c78d",
+      "fullName": "Gdańsk",
+      "codeName": "GDA",
+      "lat": 0,
+      "lon": 0,
+      "isDoppler": true,
+      "isDP": false,
+      "volumes": null,
+      "images": null,
+      "compositeImages": null,
+      "scans": [
+        {
+          "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "name": "doppler",
+          "range": 125,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "name": "classic",
+          "range": 250,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        }
+      ],
+      "products": [
+        {
+          "id": "0c15069e-9e1c-44d2-a191-662d8fa4f46a",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "dataType": null,
+          "scan": {
+            "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+            "name": "classic",
+            "range": 250,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "42710536-c154-4baf-990a-265673efa950",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "e8cf0208-db5c-4145-be0b-e6d2e616fb55",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "7091da6d-4400-427e-a1eb-78a8241bc4fd",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        }
+      ]
+    },
+    {
+      "id": "c7a992b3-ed50-40d9-b5f7-6627207fe5fb",
+      "fullName": "Poznań",
+      "codeName": "POZ",
+      "lat": 0,
+      "lon": 0,
+      "isDoppler": true,
+      "isDP": false,
+      "volumes": null,
+      "images": null,
+      "compositeImages": null,
+      "scans": [
+        {
+          "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "name": "doppler",
+          "range": 125,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "name": "classic",
+          "range": 250,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        }
+      ],
+      "products": [
+        {
+          "id": "0c15069e-9e1c-44d2-a191-662d8fa4f46a",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "dataType": null,
+          "scan": {
+            "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+            "name": "classic",
+            "range": 250,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "42710536-c154-4baf-990a-265673efa950",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "e8cf0208-db5c-4145-be0b-e6d2e616fb55",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "7091da6d-4400-427e-a1eb-78a8241bc4fd",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        }
+      ]
+    },
+    {
+      "id": "c8312f31-dc97-47c1-be78-914b1352d6a5",
+      "fullName": "Ramża",
+      "codeName": "RAM",
+      "lat": 0,
+      "lon": 0,
+      "isDoppler": true,
+      "isDP": true,
+      "volumes": null,
+      "images": null,
+      "compositeImages": null,
+      "scans": [
+        {
+          "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "name": "doppler",
+          "range": 125,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "name": "classic",
+          "range": 250,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        }
+      ],
+      "products": [
+        {
+          "id": "0c15069e-9e1c-44d2-a191-662d8fa4f46a",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "dataType": null,
+          "scan": {
+            "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+            "name": "classic",
+            "range": 250,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "42710536-c154-4baf-990a-265673efa950",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "e8cf0208-db5c-4145-be0b-e6d2e616fb55",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "7091da6d-4400-427e-a1eb-78a8241bc4fd",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        }
+      ]
+    },
+    {
+      "id": "d3b2917b-cfd0-4940-b91b-384aa35a0894",
+      "fullName": "Rzeszów",
+      "codeName": "RZE",
+      "lat": 0,
+      "lon": 0,
+      "isDoppler": true,
+      "isDP": true,
+      "volumes": null,
+      "images": null,
+      "compositeImages": null,
+      "scans": [
+        {
+          "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "name": "doppler",
+          "range": 125,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "name": "classic",
+          "range": 250,
+          "numele": 10,
+          "volumes": null,
+          "images": null,
+          "compositeImages": null
+        }
+      ],
+      "products": [
+        {
+          "id": "0c15069e-9e1c-44d2-a191-662d8fa4f46a",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "eff0448e-061b-4b91-9035-11256a0fa353",
+          "dataType": null,
+          "scan": {
+            "id": "eff0448e-061b-4b91-9035-11256a0fa353",
+            "name": "classic",
+            "range": 250,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "42710536-c154-4baf-990a-265673efa950",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "e8cf0208-db5c-4145-be0b-e6d2e616fb55",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        },
+        {
+          "id": "7091da6d-4400-427e-a1eb-78a8241bc4fd",
+          "name": "PPI 0.5°",
+          "productType": "ppi",
+          "elevationAngle": 0.5,
+          "minHeight": null,
+          "maxHeight": null,
+          "height": null,
+          "startRange": null,
+          "stopRange": null,
+          "reflectivityThreshold": null,
+          "dataTypeID": "bf15bc29-9dcd-44ce-a3a8-c1fd34af8387",
+          "scanID": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+          "dataType": null,
+          "scan": {
+            "id": "9ecb36d5-66c5-4688-91e3-d68097d1020d",
+            "name": "doppler",
+            "range": 125,
+            "numele": 10,
+            "volumes": null,
+            "images": null,
+            "compositeImages": null
+          },
+          "images": null,
+          "compositeImages": null
+        }
+      ]
+    }
+  ]

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { plainToClass } from 'class-transformer';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BoundingBox } from '../models/BoundingBox.model';
@@ -15,17 +16,18 @@ export class RadarsService {
   subject = new Subject<Radar[]>();
 
   constructor(private http: HttpClient) { 
-    this.http.get('assets/radars2.json')
+    this.http.get('https://localhost:56382/api/Radars')
       .pipe(
         map(
           (responseData: Array<any>) => {
             return responseData.map(
-              (radar) =>  new Radar(radar.name, radar.id, new Location(radar.location[0], radar.location[1]), BoundingBox.fromArray(radar.boundingBox['125']))
+              (radar) =>  plainToClass(Radar, radar, {})
             )
           }
         )
       ).subscribe(
         (radars: Radar[]) => {
+          console.log(radars);
           this.radarsList = radars;
           this.subject.next(radars);
         }

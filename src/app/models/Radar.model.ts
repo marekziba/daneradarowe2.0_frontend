@@ -1,33 +1,29 @@
 import { ElementRef } from "@angular/core";
+import { Exclude } from "class-transformer";
 import { BoundingBox } from "./BoundingBox.model";
+import { Image } from "./Image.model";
 import { Location } from "./Location.model";
+import { Product } from "./Product.model";
+import { Scan } from "./Scan.model";
 
 export class Radar {
-    constructor(
-        private _fullName: string,
-        private _codeName: string,
-        private _location: Location,
-        private _boundingBox: BoundingBox,
-        private _markerRef?: ElementRef
-    ) {}
-
-    public get fullName(): string {
-        return this._fullName;
+    id: string;
+    fullName: string;
+    codeName: string;
+    lat: number;
+    lon: number;
+    isDoppler: boolean;
+    isDP: boolean;
+    images: Image[];
+    compositeImages: Image[];
+    scans: Scan[];
+    products: Product[];
+    
+    boundingBox(): BoundingBox {
+        return undefined;
     }
 
-    public get codeName(): string {
-        return this._codeName;
-    }
-
-    public get location(): Location {
-        return this._location;
-    }
-
-    public get boundingBox(): BoundingBox {
-        return this._boundingBox;
-    }
-
-    public get markerRef(): ElementRef {
-        return this._markerRef;
+    location(): Location {
+        return new Location(this.lat, this.lon)
     }
 }

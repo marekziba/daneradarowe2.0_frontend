@@ -68,11 +68,11 @@ export class MapComponent implements OnInit, OnDestroy {
     this.initializeGeolocation();
     this.initializeSubscriptions();
 
-    this.imageSubscripton = interval(30000).subscribe(
-      () => {
-        this.reloadData();
-      }
-    );
+    // this.imageSubscripton = interval(30000).subscribe(
+    //   () => {
+    //     this.reloadData();
+    //   }
+    // );
   }
 
   ngAfterViewInit(){
@@ -83,7 +83,7 @@ export class MapComponent implements OnInit, OnDestroy {
           this.map.addOverlay(
             new Overlay({
               element: marker.nativeElement,
-              position: fromLonLat(this.radarsService.getRadarById(marker.nativeElement.getAttribute('radarId')).location.getLonLat()),
+              position: fromLonLat(this.radarsService.getRadarById(marker.nativeElement.getAttribute('radarId')).location().getLonLat()),
               positioning: 'center-center'
             })
           )
@@ -96,6 +96,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.radarsService.subject.subscribe(
       (radars: Radar[]) => {
         this.radars = radars;
+        console.log(this.radars);
       }
     );
 
@@ -118,13 +119,14 @@ export class MapComponent implements OnInit, OnDestroy {
     const timeout = timer(1000).subscribe(() => console.log('Seems like loading data takes a really long time...'));
     this.dataSubscription = this.dataService.requestData().pipe(
       map((images: Image[]) => {
+        console.log(images);
         return images.map(
           (image: Image) => {
             return {
               map: new Static({
                 interpolate: false,
                 url: "https://daneradarowe.pl" + image.url,
-                imageExtent: transformExtent(this.selectedRadar ? this.selectedRadar.boundingBox.flat('lonlat') : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
+                imageExtent: transformExtent(this.selectedRadar ? image.boundingBox().flat('lonlat') : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
               }),
               image: image
             }
@@ -179,7 +181,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.imageSource = new Static({
       interpolate: false,
       url: '',
-      imageExtent: transformExtent(this.selectedRadar ? this.selectedRadar.boundingBox.flat() : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
+      imageExtent: transformExtent(this.selectedRadar ? this.selectedRadar.boundingBox().flat() : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
     });
 
     this.imageLayer = new ImageLayer({
@@ -222,7 +224,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   addMask() {
-    const mask = new MaskPolygon(this.selectedRadar.location.getLonLat(), 125500);
+    const mask = new MaskPolygon(this.selectedRadar.location().getLonLat(), 125500);
     mask.translate(0, 500);
     // const mask = new MaskPolygon(this.selectedRadar.location.getLonLat(), 251000);
     // mask.translate(0, 1000);
