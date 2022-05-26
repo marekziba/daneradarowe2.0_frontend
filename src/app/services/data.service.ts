@@ -62,7 +62,7 @@ export class DataService {
     //   n: 12
     // });
 
-    return this.http.get('https://localhost:56382/api/Images')
+    return this.http.get('https://localhost:1157/api/Images')
     .pipe(
       tap(
         (response) => console.log(response)
@@ -76,7 +76,7 @@ export class DataService {
   }
 
   getProducts(): Observable<ProductType[]> {
-    return this.http.get('https://localhost:56382/api/Products').pipe(
+    return this.http.get('https://localhost:1157/api/Products').pipe(
       map(
         (productTypes: any) => productTypes.map(
           (productType) => plainToClass(ProductType, productType, {excludeExtraneousValues: true})
