@@ -184,8 +184,10 @@ export class MapComponent implements OnInit, OnDestroy {
   private initializeImageLayer(){
     this.imageSource = new Static({
       interpolate: false,
-      url: '',
-      imageExtent: transformExtent(this.selectedRadar ? this.selectedRadar.boundingBox().flat() : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
+      url: 'assets/2017081119300000dBZ.cmax.png',
+      imageExtent: transformExtent([11.81457241868669, 56.38527599902964, 26.351301255196198, 48.13324901839962], 'EPSG:4326', 'EPSG:3857')
+      // [11.81457241868669, 26.351301255196198, 48.13324901839962, 56.38527599902964]
+
     });
 
     this.imageLayer = new ImageLayer({
@@ -206,9 +208,7 @@ export class MapComponent implements OnInit, OnDestroy {
       }),
       layers: [
         new TileLayer({
-          source: new XYZ({
-            url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png'
-          })
+          source: new OSM()
         })
       ],
       target: 'map',
@@ -220,10 +220,10 @@ export class MapComponent implements OnInit, OnDestroy {
     // console.log(radar.codeName);
     this.selectedRadar = radar;
     this.dataService.radar = radar;
-    this.imageLayer.setSource(
-      new Static({url: '', imageExtent: [0.0, 0.0, 0.0, 0.0]})
-    );
-    this.reloadData();
+    // this.imageLayer.setSource(
+    //   new Static({url: '', imageExtent: [0.0, 0.0, 0.0, 0.0]})
+    // );
+    // this.reloadData();
     this.addMask();
   }
 

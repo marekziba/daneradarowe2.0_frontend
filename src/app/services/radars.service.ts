@@ -16,7 +16,7 @@ export class RadarsService {
   subject = new Subject<Radar[]>();
 
   constructor(private http: HttpClient) { 
-    this.http.get('https://localhost:1157/api/Radars')
+    this.http.get('https://localhost/api/Radars')
       .pipe(
         map(
           (responseData: Array<any>) => {

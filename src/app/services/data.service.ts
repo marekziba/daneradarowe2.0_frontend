@@ -5,7 +5,8 @@ import { plainToClass } from 'class-transformer';
 import { interval, timer, Observable, Subject, Subscription, map, tap } from 'rxjs';
 import { Image } from '../models/Image.model';
 import { Product } from '../models/Product.model';
-import { ProductType } from '../models/ProductType.model';
+import { ProductGroup } from '../models/ProductGroup.model';
+import { ProductVariant } from '../models/ProductVariant.model';
 import { Radar } from '../models/Radar.model';
 import { Scan } from '../models/Scan.model';
 
@@ -62,7 +63,7 @@ export class DataService {
     //   n: 12
     // });
 
-    return this.http.get('https://localhost:1157/api/Images')
+    return this.http.get('https://localhost/api/Images')
     .pipe(
       tap(
         (response) => console.log(response)
@@ -75,15 +76,26 @@ export class DataService {
     );
   }
 
-  getProducts(): Observable<ProductType[]> {
-    return this.http.get('https://localhost:1157/api/Products').pipe(
+  getProducts(): Observable<ProductGroup[]> {
+    return this.http.get('https://localhost/api/Products?radarId=2').pipe(
       map(
-        (productTypes: any) => productTypes.map(
-          (productType) => plainToClass(ProductType, productType, {excludeExtraneousValues: true})
-        ).filter(
-          (productType: ProductType) => productType.products.length > 0
-        )
-      )
+        (products: any) => {
+          let groupedProducts = products.map(
+            (product) => plainToClass(Product, product, {excludeExtraneousValues: true})
+          ).reduce((grouped: {}, item: Product) => {
+            const group = (grouped[item.productType] || []);
+            item.variants = item.variants.sort((pv1, pv2) => ProductVariant.compare(pv1, pv2))
+            group.push(item);
+            grouped[item.productType] = group;
+            return grouped;
+          }, {});
+          groupedProducts = Object.entries(groupedProducts).map(([key, value]) => {
+            return plainToClass(ProductGroup, {name: key, products: value})
+          })
+          return groupedProducts;
+        }
+      ),
+      tap((grouped) => console.log(grouped))
     )
   }
 }

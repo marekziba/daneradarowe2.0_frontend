@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ProductType } from 'src/app/models/ProductType.model';
+import { Product } from 'src/app/models/Product.model';
+import { ProductGroup } from 'src/app/models/ProductGroup.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class HeaderDropdownComponent implements OnInit {
 
   @Input() isProductSelected: boolean;
 
-  products: ProductType[];
+  products: ProductGroup[]; 
 
   dataSubscription: Subscription;
 
@@ -24,7 +25,7 @@ export class HeaderDropdownComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSubscription = this.dataService.getProducts().subscribe(
-      (products: ProductType[]) => {
+      (products: ProductGroup[]) => {
         this.products = products
       }
     )

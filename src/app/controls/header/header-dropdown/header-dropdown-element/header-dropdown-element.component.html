@@ -1,17 +1,14 @@
 <a class="dropdown-item product-item" href="#">
     <div class="product-item-wrapper">
         <div class="product-item-info">
-            <h5 class="product-item-header">{{product.name}}</h5>
-            <p class="product-item-description">{{'Zasięg: '+ product.range + 'km'}}</p>
+            <h5 class="product-item-header">{{product.fullName}}</h5>
+            <p class="product-item-description">{{'Zasięg: '+ product.scan.range + 'km'}}</p>
         </div>
-        <div class="product-item-selector">
+        <div class="product-item-selector" *ngIf="product.variants.length > 1">
             <div class="dropdown" (click)="disablePropagation($event)">
-                <div class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">0.5°</div>
+                <div class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">{{product.variants[0].propertyValue + product.variants[0].propertyUnit}}</div>
                 <div class="dropdown-menu">
-                    <p class="dropdown-item">0.5°</p>
-                    <p class="dropdown-item">0.8°</p>
-                    <p class="dropdown-item">1.4°</p>
-                    <p class="dropdown-item">2.2°</p>
+                    <p class="dropdown-item" *ngFor="let variant of product.variants">{{variant.propertyValue + variant.propertyUnit}}</p>
                 </div>
             </div>
         </div>

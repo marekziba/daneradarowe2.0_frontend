@@ -77,8 +77,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.tooltip.nativeElement.style.left = (this.screenWidth - 60 - distance) + 'px';
     }
     this.tooltip.nativeElement.style.backgroundColor = this.colorScale[Math.floor(x / (this.screenWidth / this.colorScale.length))];
-    // this.tooltip.nativeElement.textContent = `${Math.round((x / ( (this.screenWidth - this.screenWidth/this.colorScale.length) / 111.4) - 31.5)*10)/10} dBZ`;
-    this.tooltip.nativeElement.textContent = `${Math.round((x / ( (this.screenWidth) / 90) - 45)*10)/10} m/s`;
+    this.tooltip.nativeElement.textContent = `${Math.floor((x / ( (this.screenWidth - this.screenWidth/this.colorScale.length) / 111.4) - 31.5)*10)/10} dBZ`;
+    // this.tooltip.nativeElement.textContent = `${Math.round((x / ( (this.screenWidth) / 90) - 45)*10)/10} m/s`;
   }
 
   selectionModeToggle(){

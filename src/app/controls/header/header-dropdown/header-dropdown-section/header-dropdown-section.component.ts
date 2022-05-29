@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ProductType } from 'src/app/models/ProductType.model';
+import { Product } from 'src/app/models/Product.model';
+import { ProductGroup } from 'src/app/models/ProductGroup.model';
 
 @Component({
   selector: 'app-header-dropdown-section',
@@ -7,7 +8,7 @@ import { ProductType } from 'src/app/models/ProductType.model';
   styleUrls: ['./header-dropdown-section.component.scss']
 })
 export class HeaderDropdownSectionComponent implements OnInit {
-  @Input() productGroup: ProductType;
+  @Input() productGroup: ProductGroup;
 
   constructor() { }
 

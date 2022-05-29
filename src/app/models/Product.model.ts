@@ -1,38 +1,30 @@
-import { Expose } from "class-transformer";
+import { Expose, Transform, Type } from "class-transformer";
+import { DataType } from "./DataType.model";
 import { Image } from "./Image.model";
+import { ProductVariant } from "./ProductVariant.model";
 import { Scan } from "./Scan.model";
 
 export class Product {
     id: string;
-    @Expose()
-    name: string;
-
+    
     @Expose()
     productType: string;
 
     @Expose()
-    elevationAngle?: number;
+    codeName: string;
 
     @Expose()
-    minHeight?: number;
+    fullName: string;
 
     @Expose()
-    maxHeight?: number;
+    @Type(() => DataType)
+    dataType: DataType;
 
     @Expose()
-    height?: number;
-
-    @Expose()
-    startRange?: number;
-
-    @Expose()
-    stopRange?: number;
-
-    @Expose()
-    reflectivityThreshold?: number;
-
-    @Expose()
-    range: number;
-    
+    @Type(() => Scan)
     scan: Scan;
+
+    @Expose()
+    @Type(() => ProductVariant)
+    variants: ProductVariant[];
 }

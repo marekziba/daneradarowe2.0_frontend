@@ -1,7 +1,12 @@
-export class Scan {
-    private _id: string;
-    private _range: number;
+import { Expose } from "class-transformer";
 
-    get id(): string { return this._id; }
-    get range(): number { return this._range; }
+export class Scan {
+    @Expose()
+    type: string;
+
+    @Expose()
+    range: number;
+
+    @Expose()
+    numele: number;
 }
