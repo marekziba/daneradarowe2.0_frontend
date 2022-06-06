@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { plainToClass } from 'class-transformer';
+import BaseLayer from 'ol/layer/Base';
+import ImageLayer from 'ol/layer/Image';
 
 import { interval, timer, Observable, Subject, Subscription, map, tap } from 'rxjs';
 import { Image } from '../models/Image.model';
@@ -9,11 +11,12 @@ import { ProductGroup } from '../models/ProductGroup.model';
 import { ProductVariant } from '../models/ProductVariant.model';
 import { Radar } from '../models/Radar.model';
 import { Scan } from '../models/Scan.model';
+import { BaseProviderService } from './base-provider.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class DataService extends BaseProviderService {
   // state attributes
   private selectedRadar?: Radar = undefined;
   private selectedScan?: Scan = undefined;
@@ -28,7 +31,7 @@ export class DataService {
   radarChanged = new Subject<Radar>();
   imageChanged = new Subject<Image>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { super() }
 
   public set currentImage(image: Image) {
     this.imageChanged.next(image);
@@ -63,7 +66,7 @@ export class DataService {
     //   n: 12
     // });
 
-    return this.http.get('https://localhost/api/Images')
+    return this.http.get('https://localhost:8080/api/Images')
     .pipe(
       tap(
         (response) => console.log(response)
@@ -77,7 +80,7 @@ export class DataService {
   }
 
   getProducts(): Observable<ProductGroup[]> {
-    return this.http.get('https://localhost/api/Products?radarId=2').pipe(
+    return this.http.get('https://localhost:8080/api/Products?radarId=2').pipe(
       map(
         (products: any) => {
           let groupedProducts = products.map(
@@ -97,5 +100,9 @@ export class DataService {
       ),
       tap((grouped) => console.log(grouped))
     )
+  }
+
+  getLayer(): BaseLayer {
+      return new ImageLayer();
   }
 }

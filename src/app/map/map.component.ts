@@ -87,7 +87,7 @@ export class MapComponent implements OnInit, OnDestroy {
           this.map.addOverlay(
             new Overlay({
               element: marker.nativeElement,
-              position: fromLonLat(this.radarsService.getRadarById(marker.nativeElement.getAttribute('radarId')).location().getLonLat()),
+              position: fromLonLat(this.radarsService.getRadarById(marker.nativeElement.getAttribute('radarId')).location.getLonLat()),
               positioning: 'center-center'
             })
           )
@@ -130,7 +130,7 @@ export class MapComponent implements OnInit, OnDestroy {
               map: new Static({
                 interpolate: false,
                 url: "https://daneradarowe.pl" + image.url,
-                imageExtent: transformExtent(this.selectedRadar ? image.boundingBox().flat('lonlat') : [11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
+                imageExtent: transformExtent([11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
               }),
               image: image
             }
@@ -230,64 +230,12 @@ export class MapComponent implements OnInit, OnDestroy {
   addMask() {
     // const mask = new MaskPolygon(this.selectedRadar.location().getLonLat(), 125500);
     // mask.translate(0, 500);
-    const mask = new MaskPolygon(this.selectedRadar.location().getLonLat(), 251000);
+    const mask = new MaskPolygon(this.selectedRadar.location.getLonLat(), 251000);
     navigator.clipboard.writeText(JSON.stringify(mask.getLinearRing().getCoordinates()));
     console.log(mask.getLinearRing().getCoordinates().slice(0, 10));
     // mask.translate(0, 1000);
     const maskSource = mask.getSource();
     this.maskLayer.setSource(maskSource);
-  }
-
-  addMaskFull() {
-    const parser = new OL3Parser();
-    parser.inject(Point, LineString, LinearRing, Polygon, MultiPoint, MultiLineString, MultiPolygon, GeometryCollection);
-    const first = new MaskPolygon(this.radars[0].location().getLonLat(), 251000);
-    const geometry = first.getLinearRing();
-    console.log(geometry.getCoordinates());
-    navigator.clipboard.writeText(JSON.stringify(geometry.getCoordinates()));
-    // console.log(geometry);
-    // let fullMask = parser.read(geometry);
-    let fullMask = geometry;
-
-    // for(let i = 1; i < this.radars.length - 1; i++){
-    //   const parsedFullMask = parser.read(fullMask);
-    //   const mp = new MaskPolygon(this.radars[i].location().getLonLat(), 251000);
-    //   // const parsed = parser.read(mp.getLinearRing());
-    //   console.log(mp.getLinearRing().getCoordinates());
-    //   // const merged = UnionOp.union(parsedFullMask, parsed);
-    //   // fullMask = new LinearRing([parser.write(merged).getCoordinates().reduce((pv: Array<any>, cv: Array<any>) => pv.concat(cv), []).reduce((pv: Array<any>, cv: Array<any>) => pv.concat(cv), [])])
-    //   console.log(fullMask);
-    // }
-
-    // const coordinates = [parser.write(fullMask).getCoordinates().reduce((pv: Array<any>, cv: Array<any>) => pv.concat(cv), [])];
-    const coordinates = [fullMask.getCoordinates()];
-    // console.log(fullMask.getLinearRing(0));
-    const maskPolygon = new Polygon(coordinates);
-
-    const tmppolygon = new Polygon([[
-      [-180.0, 90.0],
-      [180.0, 90.0],
-      [180.0, -90.0],
-      [-180.0, -90.0]
-    ]]);
-
-    const polygon = new Polygon(tmppolygon.getCoordinates());
-
-    for(let lr of maskPolygon.getLinearRings()){
-      polygon.appendLinearRing(lr);
-    }
-
-    const transformed = polygon.transform('EPSG:4326', 'EPSG:3857');
-
-    // console.log(polygon);
-
-    const feature = new Feature({
-      geometry: transformed
-    });
-
-    this.maskLayer.setSource(new VectorSource({
-      features: [feature]
-    }));
   }
 
   private addImage(image: Static): void {
