@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/Product.model';
 import { ProductGroup } from 'src/app/models/ProductGroup.model';
-import { DataService } from 'src/app/services/data.service';
+import { RadarMetadataService } from 'src/app/services/radar-metadata.service';
 
 @Component({
   selector: 'app-header-dropdown',
@@ -12,23 +12,12 @@ import { DataService } from 'src/app/services/data.service';
 export class HeaderDropdownComponent implements OnInit {
 
   @Input() isProductSelected: boolean;
-
-  products: ProductGroup[]; 
-
-  dataSubscription: Subscription;
-
-  constructor(private dataService: DataService) { }
+  @Input() products: ProductGroup[];
   
   disablePropagation(e: Event) {
     e.stopPropagation();
   }
 
-  ngOnInit(): void {
-    this.dataSubscription = this.dataService.getProducts().subscribe(
-      (products: ProductGroup[]) => {
-        this.products = products
-      }
-    )
-  }
+  ngOnInit(): void { }
 
 }

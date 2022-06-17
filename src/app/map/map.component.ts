@@ -1,93 +1,47 @@
-import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Feature, Map, Overlay, View } from 'ol';
-import ImageLayer from 'ol/layer/Image';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { Map, Overlay, Tile, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
-import { fromLonLat, transformExtent } from 'ol/proj';
+import { fromLonLat } from 'ol/proj';
 import OSM from 'ol/source/OSM';
-import Static from 'ol/source/ImageStatic';
-import { LocationService } from '../services/location.service';
-import { Location } from '../models/Location.model';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import { interval, Observable, Subscription, timer } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Geometry, GeometryCollection, LinearRing, LineString, MultiLineString, MultiPoint, MultiPolygon, Point, Polygon } from 'ol/geom';
-import {Style, Icon, Stroke, Fill} from 'ol/style';
-import { DataService } from '../services/data.service';
 import { Image } from '../models/Image.model';
-import { RadarsService } from '../services/radars.service';
 import { Radar } from '../models/Radar.model';
-import { MaskPolygon } from '../utils/MaskPolygon';
-import { ControlsService } from '../services/controls.service';
-import XYZ from 'ol/source/XYZ';
-import OL3Parser from 'jsts/org/locationtech/jts/io/OL3Parser';
-import UnionOp from 'jsts/org/locationtech/jts/operation/union/UnionOp';
-import OverlapUnion from 'jsts/org/locationtech/jts/operation/union/OverlapUnion';
-// import { copyFile } from 'fs';
-// import ImageCanvasSource from 'ol/source/ImageCanvas';
-// import * as L from 'leaflet';
+import { BaseMapLayer } from '../utils/BaseMapLayer';
+import { Zoom } from 'ol/control';
+import TileImage from 'ol/source/TileImage';
+
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, OnDestroy {
-  private locationSubsciption = new Subscription();
-  private dataSubscription = new Subscription();
-  private selectionModeSubscription = new Subscription();
-  private imageSubscripton = new Subscription();
-  // private dataRefreshSubscription = new Subscription();
-
-  private dataSource: Observable<any>;
-
+export class MapComponent implements OnInit, OnChanges {
   private map: Map;
-  private imageSource: Static;
-  private imageLayer: ImageLayer<Static>;
-  private markerLayer: VectorLayer<VectorSource>;
-  private vectorSource: VectorSource;
-  private iconFeature: Feature;
+  private tileLayer: TileLayer<TileImage>;
 
-  private maskLayer = new VectorLayer<VectorSource>();
+  @Input() radars: Radar[];
+  @Input() selectedRadar: Radar;
+  @Input() selectionModeEnabled: boolean;
+  @Input() mapLayers: BaseMapLayer[];
+  @Input() currentImage: Image = undefined;
 
-  public radars: Radar[] = [];
-  public selectedRadar: Radar = undefined;
-  public currentImage: Image = undefined;
-
-  public selectionModeEnabled: boolean = false;
+  @Output() radarSelected = new EventEmitter<Radar>();
 
   @ViewChildren("radarMarker") markerRef: QueryList<ElementRef>;
 
-  constructor(
-    private locationService: LocationService, 
-    private dataService: DataService,
-    private radarsService: RadarsService,
-    private controlsService: ControlsService
-    ) { }
-
   ngOnInit(): void {
     this.initializeMap();
-    this.initializeMarkerLayer();
-    this.initializeImageLayer();
-    this.initializeGeolocation();
-    this.initializeSubscriptions();
-
-    // this.imageSubscripton = interval(30000).subscribe(
-    //   () => {
-    //     this.reloadData();
-    //   }
-    // );
   }
 
   ngAfterViewInit(){
     this.markerRef.changes.subscribe(
       e => {
         console.log(this.markerRef.toArray());
-        this.markerRef.toArray().map((marker: ElementRef) => {
+        this.markerRef.toArray().map((marker: ElementRef) => {+
           this.map.addOverlay(
             new Overlay({
               element: marker.nativeElement,
-              position: fromLonLat(this.radarsService.getRadarById(marker.nativeElement.getAttribute('radarId')).location.getLonLat()),
+              position: fromLonLat(this.radars.find(radar => radar.id == marker.nativeElement.getAttribute('radarId')).location.getLonLat()),
               positioning: 'center-center'
             })
           )
@@ -96,110 +50,13 @@ export class MapComponent implements OnInit, OnDestroy {
     )
   }
 
-  private initializeSubscriptions() {
-    this.radarsService.subject.subscribe(
-      (radars: Radar[]) => {
-        this.radars = radars;
-        console.log(this.radars);
-      }
-    );
-
-    this.reloadData();
-
-    this.selectionModeSubscription = this.controlsService.selectionModeChanged.subscribe(
-      (mode: boolean) => {
-        this.selectionModeEnabled = mode;
-      }
-    );
-
-    this.imageSubscripton = this.dataService.imageChanged.subscribe(
-      (image: Image) => {
-        this.currentImage = image;
-      }
-    );
-  }
-
-  private reloadData(){
-    const timeout = timer(1000).subscribe(() => console.log('Seems like loading data takes a really long time...'));
-    this.dataSubscription = this.dataService.requestData().pipe(
-      map((images: Image[]) => {
-        console.log(images);
-        return images.map(
-          (image: Image) => {
-            return {
-              map: new Static({
-                interpolate: false,
-                url: "https://daneradarowe.pl" + image.url,
-                imageExtent: transformExtent([11.812900, 56.186500, 25.157600, 48.133400], 'EPSG:4326', 'EPSG:3857')
-              }),
-              image: image
-            }
-          }
-        )
-      })
-    ).subscribe(
-        (images: {}) => {
-          // console.log(this.selectedRadar.boundingBox.flat())
-          timeout.unsubscribe();
-          if(images[0].map.getUrl() !== this.imageLayer.getSource().getUrl() && this.selectedRadar){
-            this.addImage(images[0].map);
-            this.dataService.currentImage = images[0].image;
-          }
-        }
-      );
-  }
-
-  private initializeMarkerLayer(){
-    this.iconFeature = new Feature();
-    this.iconFeature.setStyle(new Style({
-      image: new Icon({
-        scale: 0.6,
-        anchor: [0.5, 0.5],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'fraction',
-        src: 'assets/location.svg'
-      })
-    }));
-
-    this.vectorSource = new VectorSource({
-      features: [this.iconFeature]
-    });
-
-    this.markerLayer = new VectorLayer({
-      source: this.vectorSource
-    });
-
-    this.maskLayer.setStyle(new Style({
-      stroke: new Stroke({
-        color: 'rgba(0, 0, 0, 0)'
-      }),
-      fill: new Fill({
-        color: 'rgba(0, 0, 0, 0.4)'
-      })
-    }));
-
-    this.map.addLayer(this.maskLayer);
-  }
-
-  private initializeImageLayer(){
-    this.imageSource = new Static({
-      interpolate: false,
-      url: 'assets/2017081119300000dBZ.cmax.png',
-      imageExtent: transformExtent([11.81457241868669, 56.38527599902964, 26.351301255196198, 48.13324901839962], 'EPSG:4326', 'EPSG:3857')
-      // [11.81457241868669, 26.351301255196198, 48.13324901839962, 56.38527599902964]
-
-    });
-
-    this.imageLayer = new ImageLayer({
-      source: this.imageSource,
-      opacity: 0.8
-    });
-
-    this.map.addLayer(this.imageLayer);
-  }
-
   private initializeMap(): void {
     this.map = new Map({
+      controls: [new Zoom({
+        className: 'zoom-control',
+        zoomInClassName: 'zoom-btn',
+        zoomOutClassName: 'zoom-btn',
+      })],
       view: new View({
         center: fromLonLat([19.4803, 52.0693]),
         zoom: 7,
@@ -216,46 +73,15 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  switchRadar(radar: Radar) {
-    // console.log(radar.codeName);
-    this.selectedRadar = radar;
-    this.dataService.radar = radar;
-    // this.imageLayer.setSource(
-    //   new Static({url: '', imageExtent: [0.0, 0.0, 0.0, 0.0]})
-    // );
-    // this.reloadData();
-    this.addMask();
+  onRadarSelect(radar: Radar) {
+    this.radarSelected.emit(radar);
   }
 
-  addMask() {
-    // const mask = new MaskPolygon(this.selectedRadar.location().getLonLat(), 125500);
-    // mask.translate(0, 500);
-    const mask = new MaskPolygon(this.selectedRadar.location.getLonLat(), 251000);
-    navigator.clipboard.writeText(JSON.stringify(mask.getLinearRing().getCoordinates()));
-    console.log(mask.getLinearRing().getCoordinates().slice(0, 10));
-    // mask.translate(0, 1000);
-    const maskSource = mask.getSource();
-    this.maskLayer.setSource(maskSource);
+  updateLayers(){
+    this.map.setLayers([this.tileLayer, ...this.mapLayers.map(layer => layer.layer)]);
   }
 
-  private addImage(image: Static): void {
-    this.imageLayer.setSource(image);
-  }
-
-  initializeGeolocation(){
-    this.locationSubsciption = this.locationService.watcher.subscribe(
-      (location: Location) => {
-        console.log(location.getLatLon())
-        this.iconFeature.setGeometry(new Point(fromLonLat(location.getLonLat())));
-      }
-    )
-
-    this.map.addLayer(this.markerLayer);
-  }
-
-  ngOnDestroy(): void {
-    this.locationSubsciption.unsubscribe();
-    this.dataSubscription.unsubscribe();
-    this.selectionModeSubscription.unsubscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateLayers();
   }
 }

@@ -1,5 +1,5 @@
 <div id="map" class="map-container">
     <ng-container *ngIf="radars && selectionModeEnabled">
-        <div *ngFor="let radar of radars" class="radar-marker" #radarMarker (click)="switchRadar(radar)" attr.radarId="{{radar.codeName}}" [ngClass]="{'selected': selectedRadar && radar.codeName === selectedRadar.codeName}">{{radar.codeName}}</div>
+        <div *ngFor="let radar of radars" class="radar-marker" #radarMarker (click)="onRadarSelect(radar)" attr.radarId="{{radar.id}}" [ngClass]="{'selected': selectedRadar && radar.id === selectedRadar.id}">{{radar.codeName}}</div>
     </ng-container>
 </div>

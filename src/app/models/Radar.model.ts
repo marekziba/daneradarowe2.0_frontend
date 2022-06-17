@@ -8,7 +8,7 @@ import { ProductVariant } from "./ProductVariant.model";
 import { Scan } from "./Scan.model";
 
 export class Radar {
-    id: string;
+    id: number;
 
     @Expose()
     fullName: string;

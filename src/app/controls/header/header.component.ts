@@ -2,8 +2,6 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { Image } from '../../models/Image.model';
 import { Subscription } from 'rxjs';
 import { Radar } from 'src/app/models/Radar.model';
-import { ControlsService } from 'src/app/services/controls.service';
-import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +21,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('scaleTooltip') tooltip: ElementRef;
 
   constructor(
-    private controlsService: ControlsService,
-    private dataService: DataService
   ) {
     this.onResize();
   }

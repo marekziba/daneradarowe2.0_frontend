@@ -9,11 +9,12 @@ import { MapComponent } from './map/map.component';
 import { HeaderComponent } from './controls/header/header.component';
 import { SliderComponent } from './controls/slider/slider.component';
 import { LocationService } from './services/location.service';
-import { ControlsService } from './services/controls.service';
-import { DataService } from './services/data.service';
 import { HeaderDropdownComponent } from './controls/header/header-dropdown/header-dropdown.component';
 import { HeaderDropdownSectionComponent } from './controls/header/header-dropdown/header-dropdown-section/header-dropdown-section.component';
 import { HeaderDropdownElementComponent } from './controls/header/header-dropdown/header-dropdown-element/header-dropdown-element.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { MapWrapperComponent } from './map-wrapper/map-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +25,14 @@ import { HeaderDropdownElementComponent } from './controls/header/header-dropdow
     HeaderDropdownComponent,
     HeaderDropdownSectionComponent,
     HeaderDropdownElementComponent,
+    MapWrapperComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot([]),
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]

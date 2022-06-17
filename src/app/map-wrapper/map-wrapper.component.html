@@ -1,0 +1,7 @@
+<div class="map-wrapper">
+    <app-map 
+        [mapLayers]="layers$ | async"
+        [radars]="radars$ | async"
+        [selectedRadar]="selectedRadar$ | async">
+    </app-map>
+</div>

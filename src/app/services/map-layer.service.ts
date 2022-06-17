@@ -1,34 +1,29 @@
 import { Injectable } from '@angular/core';
 import BaseLayer from 'ol/layer/Base';
-import { Observable, Subject, zip } from 'rxjs';
+import { combineLatest, Observable, Subject, zip } from 'rxjs';
+import { BaseMapLayer } from '../utils/BaseMapLayer';
 import { BaseProviderService } from './base-provider.service';
-import { DataService } from './data.service';
 import { LocationService } from './location.service';
-import { RadarsService } from './radars.service';
-import { VectorService } from './vector.service';
+import { RadarImageService } from './radar-image.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapLayerService {
-  private layers: BaseLayer[];
+  private layers: BaseMapLayer[];
   private providers: BaseProviderService[];
 
   constructor(
-    private dataService: DataService,
-    private radarService: RadarsService,
     private locationService: LocationService,
-    private vectorService: VectorService
+    private radarImageService: RadarImageService
   ) {
     this.providers = [
-      dataService,
-      radarService,
       locationService,
-      vectorService
+      radarImageService
     ];
   }
 
-  getLayers(): Observable<BaseLayer[]> {
-    return zip(this.providers.map((provider) => provider.getLayer()));
+  getLayers(): Observable<BaseMapLayer[]> {
+    return combineLatest(this.providers.map((provider) => provider.getLayer()));
   }
 }
