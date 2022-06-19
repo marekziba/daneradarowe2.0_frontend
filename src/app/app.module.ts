@@ -15,6 +15,9 @@ import { HeaderDropdownElementComponent } from './controls/header/header-dropdow
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MapWrapperComponent } from './map-wrapper/map-wrapper.component';
+import { HeaderScaleComponent } from './controls/header/header-scale/header-scale.component';
+import { HeaderContentComponent } from './controls/header/header-content/header-content.component';
+import { mapReducer, generalReducer, radarImageReducer, radarMetaReducer } from './state/app.reducer';
 
 @NgModule({
   declarations: [
@@ -26,12 +29,24 @@ import { MapWrapperComponent } from './map-wrapper/map-wrapper.component';
     HeaderDropdownSectionComponent,
     HeaderDropdownElementComponent,
     MapWrapperComponent,
+    HeaderScaleComponent,
+    HeaderContentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot([]),
+    StoreModule.forRoot({
+      radarMeta: radarMetaReducer,
+      radarImage: radarImageReducer,
+      map: mapReducer,
+      general: generalReducer
+    }, {
+      runtimeChecks: {
+        strictStateImmutability: false,
+        strictActionImmutability: false,
+      },
+    }),
     EffectsModule.forRoot([])
   ],
   providers: [],

@@ -5,7 +5,7 @@ import { Config } from '../utils/Config';
 @Injectable({
   providedIn: 'root'
 })
-export class ControlsService {
+export class ConfigService {
   private config$ = new BehaviorSubject<Config>(Config.getSavedOrDefault());
 
   constructor() { }

@@ -23,7 +23,7 @@ export class MapWrapperComponent implements OnInit {
   ngOnInit(): void {
     this.layers$ = this.layerService.getLayers();
     this.radars$ = this.radarService.getRadars();
-    this.selectedRadar$ = this.radarService.getSelectedRadar();
+    this.selectedRadar$ = this.radarService.getSelectedRadarObservable();
   }
 
 }

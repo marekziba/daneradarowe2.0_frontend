@@ -4,12 +4,15 @@ import { plainToClass } from 'class-transformer';
 import { map, Observable, of, Subject } from 'rxjs';
 import { ProductGroup } from '../models/ProductGroup.model';
 import { Radar } from '../models/Radar.model';
+import { ColorScale } from '../utils/ColorScale';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RadarMetadataService {
   private radarsSource$: Observable<Radar[]>;
+
+  private radars$: Observable<Radar[]>;
   private selectedRadar$: Subject<Radar>;
 
   constructor(private http: HttpClient) {
@@ -17,14 +20,16 @@ export class RadarMetadataService {
   }
 
   private setupSource(): void {
-    this.radarsSource$ = this.http.get('http://localhost/api/Radars').pipe(map(((response: Object[]) => plainToClass(Radar, response))));
+    this.radarsSource$ = this.http.get('http://localhost/api/Radars').pipe(
+      map(((response: Object[]) => plainToClass(Radar, response)))
+    );
   }
 
   setRadar(radar: Radar): void {
     this.selectedRadar$.next(radar);
   }
 
-  getSelectedRadar(): Observable<Radar> {
+  getSelectedRadarObservable(): Observable<Radar> {
     return this.selectedRadar$.asObservable();
   }
 
@@ -34,5 +39,9 @@ export class RadarMetadataService {
 
   getProducts(): Observable<ProductGroup[]> {
     return of([])
+  }
+
+  getColorScaleObservable(): Observable<ColorScale> {
+    return of(new ColorScale());
   }
 }

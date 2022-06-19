@@ -1,0 +1,61 @@
+.logo {
+    max-height: 25px;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.scan-info-wrapper {
+    text-align: left;
+}
+
+:host {
+    flex: 0 1 auto;
+}
+
+.radar-name {
+    font-size: 38px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.product-name {
+    display: inline-block;
+}
+
+.date {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.dropdown-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.dropdown-header, .product-item {
+    min-width: 400px;
+}
+
+.dark {
+    background-color: #1a1a1a;
+    color: #e3e3e3;
+}
+
+.product-item-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.radar-switch-button {
+    margin-top: auto;
+    margin-bottom: auto;
+}

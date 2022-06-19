@@ -1,13 +1,2 @@
-<div class="row">
-    <div class="col-12 header-content">
-        <div class="scan-info-wrapper">
-            <h4 class="radar-name">{{this.selectedRadar ? this.selectedRadar.fullName : 'daneradarowe.pl'}}</h4>
-            <app-header-dropdown></app-header-dropdown>
-        </div>
-        <button type="button" class="btn btn-outline-primary shadow-none radar-switch-button" (click)="selectionModeToggle()">Zmień radar</button>
-    </div>
-</div>
-<div class="row color-scale flex-nowrap" (mousemove)="moveTooltip($event)">
-  <div *ngFor="let color of colorScale;" class="col scale-element" [ngStyle]="{backgroundColor: color}"></div>
-  <span class="tooltiptext" #scaleTooltip>Tooltip text</span>
-</div>
+<app-header-content (selectionModeToggle)="selectionModeToggle()" [selectedRadar]="selectedRadar$ | async"></app-header-content>
+<app-header-scale *ngIf="colorScale$ | async" [colors]="(colorScale$ | async)?.colors"></app-header-scale>

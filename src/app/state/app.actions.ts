@@ -26,7 +26,7 @@ export namespace AppActions {
         props<{ layers: BaseMapLayer[] }>()
     );
 
-    export const loadMapLayersFailure = createAction(
+    export const layersLoadFailure = createAction(
         '[Map] Failed Loading Map Layers',
         props<{ error: string }>()
     );

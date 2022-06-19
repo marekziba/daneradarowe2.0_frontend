@@ -1,6 +1,6 @@
 <div class="dropdown">
     <h5 *ngIf="isProductSelected; else datePlaceholder" class="dropdown-toggle date" data-bs-toggle="dropdown">PPI(dBZ) 0.5°</h5>
-    <ng-template #datePlaceholder><h5 class="dropdown-toggle date" data-bs-toggle="dropdown">Wybierz radar i product...</h5></ng-template>
+    <ng-template #datePlaceholder><h5 class="dropdown-toggle date" data-bs-toggle="dropdown">Wybierz produkt...</h5></ng-template>
   
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         <app-header-dropdown-section *ngFor="let productGroup of products" [productGroup]="productGroup"></app-header-dropdown-section>
