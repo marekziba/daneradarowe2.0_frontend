@@ -1,0 +1,28 @@
+.flex-wrapper {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.slider-content-wrapper {
+    width: 80%;
+    padding: 0px 20px 0px 20px;
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.slider-wrapper{
+    width: 100%;
+}
+
+.ngx-slider-floor, .ngx-slider-ceil {
+    display: none !important;
+}

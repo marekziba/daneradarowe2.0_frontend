@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Radar } from 'src/app/models/Radar.model';
 import { RadarMetadataService } from 'src/app/services/radar-metadata.service';
 import { ColorScale } from 'src/app/utils/ColorScale';
+import { Store } from '@ngrx/store';
+import { AppSelectors } from 'src/app/state/app.selector';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('scaleTooltip') tooltip: ElementRef;
 
   constructor(
+    private store: Store,
     private metadataService: RadarMetadataService
   ) { }
 
@@ -29,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.selectedRadar$ = this.metadataService.getSelectedRadarObservable();
+    this.selectedRadar$ =this.store.select(AppSelectors.getSelectedRadar);
     this.colorScale$ = this.metadataService.getColorScaleObservable();
 
     // this.imageSubscription = this.metadataService.imageChanged.subscribe(

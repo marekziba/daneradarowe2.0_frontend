@@ -42,6 +42,6 @@ export class RadarMetadataService {
   }
 
   getColorScaleObservable(): Observable<ColorScale> {
-    return of(new ColorScale());
+    return of(null);
   }
 }

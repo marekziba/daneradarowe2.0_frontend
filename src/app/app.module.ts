@@ -18,6 +18,8 @@ import { MapWrapperComponent } from './map-wrapper/map-wrapper.component';
 import { HeaderScaleComponent } from './controls/header/header-scale/header-scale.component';
 import { HeaderContentComponent } from './controls/header/header-content/header-content.component';
 import { mapReducer, generalReducer, radarImageReducer, radarMetaReducer } from './state/app.reducer';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { SliderControlsComponent } from './controls/slider/slider-controls/slider-controls.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { mapReducer, generalReducer, radarImageReducer, radarMetaReducer } from 
     MapWrapperComponent,
     HeaderScaleComponent,
     HeaderContentComponent,
+    SliderControlsComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { mapReducer, generalReducer, radarImageReducer, radarMetaReducer } from 
         strictActionImmutability: false,
       },
     }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    NgxSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

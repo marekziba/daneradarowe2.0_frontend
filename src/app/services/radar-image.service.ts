@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { plainToClass } from 'class-transformer';
 import VectorLayer from 'ol/layer/Vector';
 import { map, Observable, of } from 'rxjs';
 import { Image } from '../models/Image.model';
@@ -26,12 +27,12 @@ export class RadarImageService extends BaseProviderService {
     super();
   }
 
-  private setupDataSource(): void {
+  public getImages(): void {
     this.dataSource$ = this.http.get('https://localhost:8080/api/Images', {
       params: {
         productId: 0
       }
-    }).pipe(map(() => []));
+    }).pipe(map((images: []) => plainToClass(Image, images)));
   }
 
   getLayer(): Observable<BaseMapLayer> {
