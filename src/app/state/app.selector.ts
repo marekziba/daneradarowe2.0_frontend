@@ -47,4 +47,9 @@ export namespace AppSelectors {
         getRadarImages,
         (imageState: RadarImageState) => imageState.images[imageState.selectedImageId]
     )
+
+    export const getCurrentImageId = createSelector(
+        getRadarImages,
+        (state: RadarImageState) => state.selectedImageId
+    )
 }

@@ -35,4 +35,9 @@ export namespace AppActions {
         '[Map] Update Map Layer',
         props<{ layer: BaseMapLayer, preserveVisibility: boolean }>()
     );
+
+    export const setCurrentImageId = createAction(
+        '[RadarImage] Set Current Image ID',
+        props<{ id: number }>()
+    );
 }
