@@ -12,12 +12,12 @@ import { AppSelectors } from 'src/app/state/app.selector';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   selectedRadar$: Observable<Radar>;
   colorScale$: Observable<ColorScale>;
   currentImage$: Observable<Image>;
 
-  private imageSubscription = new Subscription();
+  // private imageSubscription = new Subscription();
   private dataSubscription = new Subscription();
 
   @ViewChild('scaleTooltip') tooltip: ElementRef;
@@ -55,10 +55,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
   selectionModeToggle(){
     // const currentMode = this.controlsService.selectionMode;
     // this.controlsService.setSelectionMode(!currentMode);
-  }
-
-  ngOnDestroy(): void {
-    this.dataSubscription.unsubscribe();
-    this.imageSubscription.unsubscribe();
   }
 }

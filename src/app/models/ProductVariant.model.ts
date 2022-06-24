@@ -4,6 +4,9 @@ import { Location } from "./Location.model";
 
 export class ProductVariant {
     @Expose()
+    id: number;
+
+    @Expose()
     propertyName: string;
 
     @Expose()

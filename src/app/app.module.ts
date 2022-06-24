@@ -7,8 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { HeaderComponent } from './controls/header/header.component';
-import { SliderComponent } from './controls/slider/slider.component';
-import { LocationService } from './services/location.service';
 import { HeaderDropdownComponent } from './controls/header/header-dropdown/header-dropdown.component';
 import { HeaderDropdownSectionComponent } from './controls/header/header-dropdown/header-dropdown-section/header-dropdown-section.component';
 import { HeaderDropdownElementComponent } from './controls/header/header-dropdown/header-dropdown-element/header-dropdown-element.component';
@@ -20,6 +18,8 @@ import { HeaderContentComponent } from './controls/header/header-content/header-
 import { mapReducer, generalReducer, radarImageReducer, radarMetaReducer } from './state/app.reducer';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SliderControlsComponent } from './controls/slider/slider-controls/slider-controls.component';
+import { SliderWrapperComponent } from './controls/slider/slider-wrapper.component';
+import { SliderComponent } from './controls/slider/slider/slider.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,7 @@ import { SliderControlsComponent } from './controls/slider/slider-controls/slide
     HeaderScaleComponent,
     HeaderContentComponent,
     SliderControlsComponent,
+    SliderWrapperComponent,
   ],
   imports: [
     BrowserModule,
